@@ -1,7 +1,8 @@
+"use client"
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.BASE_BACKEND_URI,
+  baseURL: "http://localhost:4000/api/v1",
   withCredentials: true,
 })
 

@@ -1,10 +1,11 @@
+"use client";
 import api from "@/utils/axiosInstance";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 interface AuthContextType {
-  accessToken: string;
-  refreshToken: string;
+  accessToken: string | null;
+  refreshToken: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
 }
@@ -29,33 +30,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   //login
   const login = async (email: string, password: string) => {
     try {
-      const response = await api.get("/users/login");
+      const response = await api.post("/users/login", {
+        email,
+        password,
+      });
       const { accessToken, refreshToken } = response.data;
       Cookies.set("accessToken", accessToken);
       Cookies.set("refreshToken", refreshToken);
+      if (!response) {
+        throw new Error("Failed to login user");
+      }
     } catch (error) {
       console.log("Login Failed", error);
       return;
     }
   };
   //logout
-  const logout = async() => {
+  const logout = async () => {
     try {
       const res = await api.get("/users/logout");
-      if(res){
+      if (res.status === 200) {
         Cookies.remove("accessToken");
         Cookies.remove("refreshToken");
         setAccessToken(null);
         setRefreshToken(null);
       }
-      
     } catch (error) {
       console.log("logout failed", error);
       return;
     }
   };
 
-  return <AuthContext.Provider value={{accessToken,refreshToken, login,logout}}>
-    {children}
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ accessToken, refreshToken, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
 };
