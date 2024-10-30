@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
 import NavBar from "@/components/NavBar";
+import HomeAsideLayout from "@/components/HomeAsideLayout";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -29,12 +30,17 @@ export default function RootLayout({
     <AuthProvider>
       <html lang="en">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden`}
         >
-          <div className="">
-          <NavBar />
-          </div>
-          {children}
+          <main>
+            <div className="h-16 overflow-hidden">
+              <NavBar />
+            </div>
+            <div className="flex h-[calc(100vh-4rem)]">
+              <HomeAsideLayout />
+              {children}
+            </div>
+          </main>
         </body>
       </html>
     </AuthProvider>
