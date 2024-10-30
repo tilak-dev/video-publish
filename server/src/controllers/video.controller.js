@@ -118,7 +118,7 @@ const getVideoById = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid video id");
   }
   //aggregation
-  const video = await Video.aggregate([
+  const video = await Video.aggregate([       
     {
       $match: {
         _id: new mongoose.Types.ObjectId(videoId), //creating new instance
@@ -284,6 +284,58 @@ const updatedViews = asyncHandler(async(req,res)=>{
   )
 })
 
+const getHomeVideo = asyncHandler(async(req,res)=>{
+  // find all videos USING aggregation and isPublic
+  const videos = await Video.aggregate([
+    {
+      $match: {
+        isPublic: true,
+      },
+    },
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+    {
+      $limit: 1,
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "owner",
+        foreignField: "_id",
+        as: "owner",
+        pipeline:[
+            {
+                $project: {
+                    _id: 1,
+                    fullName: 1,
+                    username: 1,
+                    avatar: 1,
+                },
+            }
+        ]
+      },
+    },
+    {
+        $addFields: {
+            owner: {
+                $arrayElemAt: ["$owner", 0],
+            }
+        }
+    }
+  ])
+  //validation
+  if (!videos || videos.length === 0) {
+    throw new ApiError(404, "No public videos found");
+  }
+  //return
+  return res
+   .status(200)
+   .json(new ApiResponse(200, "Home video fetched successfully", videos));
+})
+
 export {
   getAllVideos,
   publishAVideo,
@@ -292,4 +344,5 @@ export {
   deleteVideo,
   togglePublishStatus,
   updatedViews,
+  getHomeVideo
 };

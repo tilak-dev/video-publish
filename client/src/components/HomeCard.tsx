@@ -20,7 +20,7 @@ const VideoCard = ({ thumbnail,videoFile, owner_name, views, createdAt,title,upl
             <div className="flex space-x-3">
                 {/* Channel Avatar */}
                 <Image
-                    src={thumbnail} // Update this with dynamic channel avatar if available
+                    src={owner_image} // Update this with dynamic channel avatar if available
                     alt="Channel Avatar"
                     width={40}
                     height={40}
@@ -30,7 +30,7 @@ const VideoCard = ({ thumbnail,videoFile, owner_name, views, createdAt,title,upl
                 {/* Title and Channel Info */}
                 <div className="space-y-1">
                     <h3 className="text-md font-semibold text-gray-900 truncate">{title}</h3>
-                    <p className="text-sm text-gray-600">{channel}</p>
+                    <p className="text-sm text-gray-600">{owner_name}</p>
                     <p className="text-sm text-gray-500">{views} views • {uploadedAt}</p>
                 </div>
             </div>
