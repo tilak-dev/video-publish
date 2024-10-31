@@ -1,5 +1,13 @@
+"use client"
 import { VideoCardType } from "@/types/type";
-import React, { createContext, Dispatch, useContext, useEffect, useState } from "react";
+import api from "@/utils/axiosInstance";
+import React, {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 //interface
 interface videoDataContextType {
@@ -9,8 +17,9 @@ interface videoDataContextType {
   setLoading: (loading: boolean) => void;
 }
 
-
-const videoDataContext = createContext<videoDataContextType | undefined>(undefined);
+const videoDataContext = createContext<videoDataContextType | undefined>(
+  undefined
+);
 
 export const VideoDataProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -18,17 +27,29 @@ export const VideoDataProvider: React.FC<{ children: React.ReactNode }> = ({
   const [videos, setVideos] = useState<VideoCardType[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(()=>{
+  const fetchedVideo = async () => {
     try {
-      
+      setLoading(true);
+      const response = await api("/video");
+      if (!response.data) {
+        console.error("An error occurred while fetching videos")
+      }
+      console.log("data",response.data.data)
+      setVideos(response.data);
+      setLoading(false);
     } catch (error) {
-      console.error("bhai ye error h ",error);
+      console.log("error n fetching videos",error)
       setLoading(false);
     }
-  },[videos,setVideos])
+  };
+  useEffect(() => {
+    fetchedVideo();
+  }, [setVideos]);
 
   return (
-    <videoDataContext.Provider value={{videos,setLoading,setVideos,loading}}>
+    <videoDataContext.Provider
+      value={{ videos, setLoading, setVideos, loading }}
+    >
       {children}
     </videoDataContext.Provider>
   );

@@ -298,9 +298,6 @@ const getHomeVideo = asyncHandler(async(req,res)=>{
       },
     },
     {
-      $limit: 1,
-    },
-    {
       $lookup: {
         from: "users",
         localField: "owner",

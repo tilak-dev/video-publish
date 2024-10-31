@@ -19,13 +19,16 @@ const VideoCard = ({ thumbnail,videoFile, owner_name, views, createdAt,title,upl
             {/* Video Details */}
             <div className="flex space-x-3">
                 {/* Channel Avatar */}
-                <Image
+                {owner_image ?<Image
                     src={owner_image} // Update this with dynamic channel avatar if available
                     alt="Channel Avatar"
                     width={40}
                     height={40}
                     className="rounded-full"
-                />
+                />: (
+                    <div className="w-10 h-10 rounded-full bg-gray-200" /> // Placeholder if no image
+                )}
+                
 
                 {/* Title and Channel Info */}
                 <div className="space-y-1">
