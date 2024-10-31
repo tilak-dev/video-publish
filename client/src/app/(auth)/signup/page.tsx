@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+
 import Link from "next/link";
 import {
   Form,
@@ -10,7 +10,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { signUpSchema } from "@/app/schemas/signupSchema";
+import { signUpSchema } from "@/schemas/signupSchema";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -52,6 +52,8 @@ const SignupPage = () => {
       console.log(response.data);
     } catch (error) {
       console.error("Error registering user:", error);
+    }finally{
+      form.reset();
     }
   }
   return (
