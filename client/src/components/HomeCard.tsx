@@ -4,32 +4,29 @@ import Image from 'next/image';
 const VideoCard = ({
   _id,
   thumbnail,
-  owner_name,
+  owner,
   views,
   createdAt,
   title,
   uploadedAt,
-  owner_image,
 }: VideoCardType) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full md:w-[350px] p-4">
+    <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full p-3">
       {/* Video Thumbnail */}
       <div className="relative w-full h-auto rounded-lg overflow-hidden">
-        <Image
+        <img
           src={thumbnail}
           alt="Video Thumbnail"
-          layout="fill"
-          objectFit="cover"
           className="transition-transform duration-300 transform hover:scale-105"
         />
       </div>
 
       {/* Video Details */}
-      <div className="flex items-start mt-3 space-x-3">
+      <div className="flex items-center mt-3 space-x-3">
         {/* Channel Avatar */}
-        {owner_image ? (
-          <Image
-            src={owner_image}
+        {owner.avatar ? (
+          <img
+            src={owner.avatar}
             alt="Channel Avatar"
             width={40}
             height={40}
@@ -44,8 +41,8 @@ const VideoCard = ({
         {/* Title and Channel Info */}
         <div className="flex-1">
           <h3 className="text-lg font-semibold text-gray-900 truncate">{title}</h3>
-          <p className="text-sm text-gray-600">{owner_name}</p>
-          <p className="text-xs text-gray-500">{views} views • {uploadedAt}</p>
+          <p className="text-sm text-gray-600">{owner.name}</p>
+          <p className="text-xs text-gray-500">{views} views • 1 day ago</p>
         </div>
       </div>
     </div>

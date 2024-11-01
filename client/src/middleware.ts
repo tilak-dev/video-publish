@@ -6,7 +6,7 @@ export function middleware(request:NextRequest) {
   const token = request.cookies.get("accessToken")
   //validation error
   if (!token) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
  
 

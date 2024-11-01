@@ -35,7 +35,7 @@ export const VideoDataProvider: React.FC<{ children: React.ReactNode }> = ({
         console.error("An error occurred while fetching videos")
       }
       console.log("data",response.data.data)
-      setVideos(response.data);
+      setVideos(response.data.data);
       setLoading(false);
     } catch (error) {
       console.log("error n fetching videos",error)

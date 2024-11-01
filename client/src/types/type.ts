@@ -8,8 +8,10 @@ export interface VideoCardType {
   duration?: number;
   createdAt?: string;
   uploadedAt?: string;
-  owner_id?: string;
-  owner_name?: string;
-  owner_username?: string;
-  owner_image?: string;
+  owner:{
+    _id?: string;
+    name?: string;
+    username?: string;
+    avatar?: string;
+  }
 }
