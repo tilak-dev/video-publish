@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+			gridTemplateColumns: {
+        'my-columns': 'auto auto'
+      },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

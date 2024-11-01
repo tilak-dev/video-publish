@@ -16,7 +16,7 @@ const VideoCard = ({
   return (
     <div className="bg-white rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 w-full p-3">
       {/* Video Thumbnail */}
-      <div className="relative w-full h-auto rounded-lg overflow-hidden">
+      <div className="flex justify-center w-full h-auto rounded-lg overflow-hidden">
         <Link href={`/video/${_id}`}>
           <img
             src={thumbnail}

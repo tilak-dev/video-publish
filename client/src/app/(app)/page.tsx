@@ -11,7 +11,7 @@ const VideoGrid = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Trending Videos</h2>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 4xl:grid-cols-my-columns gap-3">
           {videos.map((video) => (
             <VideoCard
               key={video._id}

@@ -32,15 +32,19 @@ export default function RootLayout({
       <VideoDataProvider>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden w-screen `}
           >
-            <main>
+            <main className="w-screen ">
               <div className="h-16 overflow-hidden">
                 <NavBar />
               </div>
               <div className="flex h-[calc(100vh-4rem)]">
-                <HomeAsideLayout />
-                {children}
+                <div className="w-1/5">
+                  <HomeAsideLayout />
+                </div>
+                <div className="w-4/5">
+                   {children}
+                </div>
               </div>
             </main>
           </body>
