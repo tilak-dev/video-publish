@@ -37,7 +37,7 @@ export default function RootLayout({
               <div className="h-16 overflow-hidden">
                 <Navbar />
               </div>
-              <div className="">{children}</div>
+              <div className="h-screen">{children}</div>
             </main>
           </body>
         </html>

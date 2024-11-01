@@ -1,43 +1,37 @@
+"use client";
 import DashboardTable from "@/components/dashboardTable";
-import {
-  FaThumbsUp,
-  FaThumbsDown,
-  FaTrashAlt,
-  FaEdit,
-  FaUser,
-  FaEye,
-  FaHeart,
-  FaPlus,
-} from "react-icons/fa";
+import { DashboardStats } from "@/types/type";
+import api from "@/utils/axiosInstance";
+import { useEffect, useState } from "react";
+import { FaUser, FaEye, FaHeart, FaPlus } from "react-icons/fa";
 
 const Dashboard = () => {
-  // Sample data for videos
-  const videos = [
-    {
-      id: 1,
-      title: "JavaScript Fundamentals: Variables and Data Types",
-      status: "Published",
-      views: 221234,
-      likes: 921,
-      dislikes: 49,
-      date: "22/09/2023",
-      owner: "React Patterns",
-    },
-    {
-      id: 2,
-      title: "React Hooks Explained: useState and useEffect",
-      status: "Unpublished",
-      views: 4053,
-      likes: 2520,
-      dislikes: 279,
-      date: "21/09/2023",
-      owner: "React Patterns",
-    },
-    // Additional videos...
-  ];
+  const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [loading,setLoading] = useState<boolean>(false)
+  //fetch data 
+  const fetchStats = async () => {
+    try {
+      setLoading(true)
+      const response = await api.get("/dashboard/stats");
+      if (!response.data) {
+        console.error("Error fetching dashboard stats:");
+        return;
+      }
+      setStats(response.data.data);
+    } catch (error) {
+      console.error("Error fetching dashboard stats:", error);
+      return
+    } finally{
+      setLoading(false)
+    }
+  };
 
+  //use Effect 
+  useEffect(() => {
+    fetchStats();
+  }, []);
   return (
-    <div className="bg-gray-900 h-screen p-8 pb-20 text-white  overflow-y-auto">
+    <div className="bg-gray-900 h-full p-8 pb-24 text-white  overflow-y-auto">
       {/* Header Section */}
       <header className="flex justify-between items-center mb-8">
         <div>
@@ -59,7 +53,7 @@ const Dashboard = () => {
           </div>
           <div>
             <p className="text-lg font-semibold">Total Views</p>
-            <p className="text-2xl font-bold">221,234</p>
+            <p className="text-2xl font-bold">{stats?.totalViews}</p>
           </div>
         </div>
         <div className="bg-gray-800 rounded-lg p-6 gap-x-4  flex items-center">
@@ -69,7 +63,7 @@ const Dashboard = () => {
 
           <div>
             <p className="text-lg font-semibold">Total Subscribers</p>
-            <p className="text-2xl font-bold">4,053</p>
+            <p className="text-2xl font-bold">{stats?.totalSubscribers}</p>
           </div>
         </div>
         <div className="bg-gray-800 rounded-lg p-6 gap-x-4 flex items-center">
@@ -79,10 +73,9 @@ const Dashboard = () => {
 
           <div>
             <p className="text-lg font-semibold">Total Likes</p>
-            <p className="text-2xl font-bold">63,021</p>
+            <p className="text-2xl font-bold">{stats?.totalLikes}</p>
           </div>
         </div>
-
       </div>
 
       {/* Video List Table */}
