@@ -25,7 +25,7 @@ const uploadOnCloudinary = async (localFilePath) => {
   try {
     //upload
     const uploadResult = await cloudinary.uploader.upload(localFilePath, {
-      public_id: "anshu",
+      folder:"mytube",
       resource_type: "auto",
     });
     if (!uploadResult) {

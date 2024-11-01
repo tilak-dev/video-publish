@@ -324,7 +324,7 @@ const getHomeVideo = asyncHandler(async(req,res)=>{
     }
   ])
   //validation
-  if (!videos || videos.length === 0) {
+  if (!videos) {
     throw new ApiError(404, "No public videos found");
   }
   //return

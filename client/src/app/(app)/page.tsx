@@ -7,7 +7,7 @@ const VideoGrid = () => {
   const { videos } = useVideos();
 
   return (
-    <div className="h-full w-full bg-gradient-to-b from-gray-50 to-gray-100 py-8">
+    <div className="h-full w-full bg-gradient-to-b from-gray-50 to-gray-100 py-8 overflow-y-auto">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Trending Videos</h2>
         

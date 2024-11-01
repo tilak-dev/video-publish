@@ -14,6 +14,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
+router.route('/').get(getHomeVideo)
 // middleware
 router.use(verifyJWT);
 
@@ -21,7 +22,6 @@ router.use(verifyJWT);
 
 router
   .route("/")
-  .get(getHomeVideo)
   .post(
     upload.fields([
       {
