@@ -10,7 +10,7 @@ export function middleware(request:NextRequest) {
   }
  
 
-  const isPublicPath = path.startsWith("/login") || path.startsWith("/register") || path==="/"
+  const isPublicPath = path.startsWith("/login") || path.startsWith("/signup")
   const isPrivatePath = path=== "/home"
 
 
