@@ -2,9 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
-import NavBar from "@/components/NavBar";
-import HomeAsideLayout from "@/components/HomeAsideLayout";
 import { VideoDataProvider } from "@/context/FetchVideo";
+import Navbar from "@/components/NavBar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -34,18 +33,11 @@ export default function RootLayout({
           <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden w-screen `}
           >
-            <main className="w-screen ">
+            <main className=" h-full w-screen ">
               <div className="h-16 overflow-hidden">
-                <NavBar />
+                <Navbar />
               </div>
-              <div className="flex h-[calc(100vh-4rem)]">
-                <div className="w-1/5">
-                  <HomeAsideLayout />
-                </div>
-                <div className="w-4/5">
-                   {children}
-                </div>
-              </div>
+              <div className="">{children}</div>
             </main>
           </body>
         </html>
