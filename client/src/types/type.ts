@@ -15,6 +15,7 @@ export interface VideoCardType {
     avatar?: string;
   };
   isPublic?: boolean;
+  likes?:number
 }
 
 export interface DashboardStats {

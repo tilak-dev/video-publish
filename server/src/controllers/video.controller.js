@@ -316,9 +316,20 @@ const getHomeVideo = asyncHandler(async(req,res)=>{
       },
     },
     {
+      $lookup:{
+        from:"likes",
+        localField: "_id",
+        foreignField: "onVideo",
+        as: "likes",
+      }
+    },
+    {
         $addFields: {
             owner: {
                 $arrayElemAt: ["$owner", 0],
+            },
+            likes:{
+              $size: "$likes"
             }
         }
     }
