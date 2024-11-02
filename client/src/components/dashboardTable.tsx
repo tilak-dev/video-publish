@@ -99,7 +99,7 @@ export default function DashboardTable() {
               </TableCell>
               <TableCell className="py-4 px-6">
                 <span className="text-green-400 font-semibold">
-                  {video.views} <FaThumbsUp className="inline-block ml-1" />
+                  {video.likes} <FaThumbsUp className="inline-block ml-1" />
                 </span>
               </TableCell>
               <TableCell className="py-4 px-6 text-gray-400">

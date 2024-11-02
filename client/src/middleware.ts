@@ -11,7 +11,7 @@ export function middleware(request:NextRequest) {
  
 
   const isPublicPath = path.startsWith("/login") || path.startsWith("/signup")
-  const isPrivatePath = path=== "/home"
+  const isPrivatePath = path=== "/home" || path.startsWith("/dashboard") 
 
 
   //todo getting user
@@ -39,7 +39,7 @@ export const config = {
   matcher: [
     "/login",
     "/admin",
-    "/admin/:path*",
+    "/dashboard",
     "/signup",
     "/",
     "/home",

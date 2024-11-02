@@ -1,13 +1,23 @@
 "use client";
 import api from "@/utils/axiosInstance";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, Dispatch, useContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
+interface CurrentUser {
+  _id?: string;
+  username?: string;
+  email?: string;
+  fullName?: string;
+  avatar?: string;
+  coverImage?: string;
+  watchHistory?: [];
+}
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
+  currentUser:CurrentUser | null ;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -17,6 +27,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 
   useEffect(() => {
     const token = Cookies.get("accessToken");
@@ -35,10 +46,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         password,
       });
       const { accessToken, refreshToken } = response.data;
-      Cookies.set("accessToken", accessToken);
-      Cookies.set("refreshToken", refreshToken);
+      const currentUser = response.data.data
       if (!response) {
         throw new Error("Failed to login user");
+      }
+      Cookies.set("accessToken", accessToken);
+      Cookies.set("refreshToken", refreshToken);
+      if(currentUser && currentUser){
+        setCurrentUser(currentUser);
       }
     } catch (error) {
       console.log("Login Failed", error);
@@ -62,7 +77,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   return (
-    <AuthContext.Provider value={{ accessToken, refreshToken, login, logout }}>
+    <AuthContext.Provider
+      value={{ accessToken, refreshToken, login, logout, currentUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
