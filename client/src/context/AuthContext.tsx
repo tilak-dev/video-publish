@@ -1,23 +1,22 @@
 "use client";
 import api from "@/utils/axiosInstance";
-import React, { createContext, Dispatch, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import Cookies from "js-cookie";
+import { CurrentUser } from "@/types/type";
+import { useRouter } from "next/navigation";
 
-interface CurrentUser {
-  _id?: string;
-  username?: string;
-  email?: string;
-  fullName?: string;
-  avatar?: string;
-  coverImage?: string;
-  watchHistory?: [];
-}
 interface AuthContextType {
   accessToken: string | null;
   refreshToken: string | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  currentUser:CurrentUser | null ;
+  currentUser: CurrentUser | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -25,6 +24,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const router = useRouter();
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [refreshToken, setRefreshToken] = useState<string | null>(null);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
@@ -46,15 +46,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         password,
       });
       const { accessToken, refreshToken } = response.data;
-      const currentUser = response.data.data
+      const user = response.data.data;
       if (!response) {
         throw new Error("Failed to login user");
       }
+      console.log("bhai dekh user deatils", response.data);
       Cookies.set("accessToken", accessToken);
       Cookies.set("refreshToken", refreshToken);
-      if(currentUser && currentUser){
-        setCurrentUser(currentUser);
-      }
+      setCurrentUser(user);
+      router.push("/home");
     } catch (error) {
       console.log("Login Failed", error);
       return;
@@ -64,12 +64,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const logout = async () => {
     try {
       const res = await api.get("/users/logout");
-      if (res.status === 200) {
-        Cookies.remove("accessToken");
-        Cookies.remove("refreshToken");
-        setAccessToken(null);
-        setRefreshToken(null);
+      if (!res) {
+        throw new Error("Failed to logout user");
       }
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
+      setAccessToken(null);
+      setRefreshToken(null);
+      setCurrentUser(null);
+      router.refresh();
+      router.push("/");
     } catch (error) {
       console.log("logout failed", error);
       return;

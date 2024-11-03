@@ -1,8 +1,14 @@
+"use client"
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
 
 const Navbar = () => {
+  const {currentUser,logout } = useAuth()
+  const OnLogout = () => {
+    logout()
+  }
   return (
     <header className="flex items-center justify-between px-8 py-2 bg-gradient-to-r from-gray-800 to-gray-900 text-white h-16">
       {/* Logo */}
@@ -29,8 +35,25 @@ const Navbar = () => {
 
       {/* User Profile & Notifications */}
       <div className="flex items-center space-x-4">
-        {/* Login */}
+        {currentUser?._id ?
+        <>
+         <Link
+          href="/login"
+          className="text-gray-800 py-1.5 rounded-full px-5 border-[1px] border-indigo-600 bg-indigo-500 hover:bg-indigo-800 transition duration-300 ease-in-out hover:text-white"
+        >
+         Home
+        </Link>
+        {/* Signup */}
         <Link
+          href="/signup"
+          onClick={OnLogout}
+          className="text-white py-1.5 rounded-full px-5 border-[1px] border-red-600 bg-red-500 hover:bg-red-600 transition duration-300 ease-in-out"
+        >
+          Logout
+        </Link>
+        </> :
+          <>
+           <Link
           href="/login"
           className="text-gray-800 py-1.5 rounded-full px-5 border-[1px] border-indigo-600 bg-indigo-500 hover:bg-indigo-800 transition duration-300 ease-in-out hover:text-white"
         >
@@ -43,6 +66,9 @@ const Navbar = () => {
         >
           Sign up
         </Link>
+          </>}
+        {/* Login */}
+       
       </div>
     </header>
   );

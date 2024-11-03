@@ -38,3 +38,13 @@ export interface DashboardVideo {
   createdAt?: string;
   updatedAt?: true;
 }
+
+export interface CurrentUser {
+  _id?: string;
+  username?: string;
+  email?: string;
+  fullName?: string;
+  avatar?: string;
+  coverImage?: string;
+  watchHistory?: [];
+}
