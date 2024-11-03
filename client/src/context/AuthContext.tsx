@@ -43,7 +43,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       Cookies.set("accessToken", accessToken);
       Cookies.set("refreshToken", refreshToken);
       setCurrentUser(user);
-      router.push("/home");
+      router.replace("/home");
     } catch (error) {
       console.log("Login Failed", error);
       return;
