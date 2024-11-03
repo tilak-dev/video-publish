@@ -6,7 +6,7 @@ import { IoSearch } from "react-icons/io5";
 
 const Navbar = () => {
   const {currentUser,logout } = useAuth()
-  const OnLogout = () => {
+  const OnLogout =() => {
     logout()
   }
   return (
@@ -35,22 +35,21 @@ const Navbar = () => {
 
       {/* User Profile & Notifications */}
       <div className="flex items-center space-x-4">
-        {currentUser?._id ?
+        {currentUser ?
         <>
          <Link
-          href="/login"
+          href="/"
           className="text-gray-800 py-1.5 rounded-full px-5 border-[1px] border-indigo-600 bg-indigo-500 hover:bg-indigo-800 transition duration-300 ease-in-out hover:text-white"
         >
          Home
         </Link>
         {/* Signup */}
-        <Link
-          href="/signup"
+        <button
           onClick={OnLogout}
           className="text-white py-1.5 rounded-full px-5 border-[1px] border-red-600 bg-red-500 hover:bg-red-600 transition duration-300 ease-in-out"
         >
           Logout
-        </Link>
+        </button>
         </> :
           <>
            <Link

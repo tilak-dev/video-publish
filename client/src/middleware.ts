@@ -38,11 +38,9 @@ export function middleware(request:NextRequest) {
 export const config = {
   matcher: [
     "/login",
-    "/admin",
     "/dashboard",
     "/signup",
     "/",
     "/home",
-    "/account/:path*",
   ],
 };
