@@ -51,10 +51,7 @@ const VideoDetailPage = () => {
           <div className="flex flex-col text-gray-400">
             <span>{video?.views} views • 18 hours ago</span>
             <div className="text-sm">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              possimus, tempore ex commodi delectus perspiciatis fuga repellat
-              architecto voluptatum sequi odit cum reprehenderit recusandae
-              officia inventore earum aperiam exercitationem hic.
+            {video?.description}
             </div>
           </div>
           <div className="flex items-center justify-between">
@@ -63,10 +60,10 @@ const VideoDetailPage = () => {
             {/* Social Icons */}
             <div className="flex items-center space-x-4">
               <span className="flex items-center space-x-2">
-                <FiThumbsUp /> <span>3050</span>
+                <FiThumbsUp /> <span>{video?.likes}</span>
               </span>
               <span className="flex items-center space-x-2">
-                <FiMessageSquare /> <span>20</span>
+                <FiMessageSquare /> <span>{video?.views}</span>
               </span>
             </div>
           </div>
