@@ -31,7 +31,7 @@ const getChannelStats = asyncHandler(async (req, res) => {
       $lookup: {
         from: "subscriptions",
         localField: "owner",
-        foreignField: "channel",
+        foreignField: "subscriber",
         as: "totalSubscribers",
       },
     },

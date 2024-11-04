@@ -1,12 +1,15 @@
 "use client"
 import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IoSearch } from "react-icons/io5";
-import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const user =localStorage.getItem("user");
+  const [user, setUser] = useState<string | null>(null)
+
+  useEffect(() => {
+    setUser(localStorage.getItem("user"))
+  }, [window.localStorage.getItem("user")])
   const {logout } = useAuth()
   const OnLogout =() => {
     logout()
