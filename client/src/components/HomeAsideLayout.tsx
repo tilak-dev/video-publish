@@ -21,7 +21,7 @@ const HomeAsideLayout = () => {
   ];
 
   return (
-    <aside className="w-full bg-gray-900 text-white h-full  p-4 space-y-6">
+    <aside className="w-full bg-gray-900 text-white h-full  p-4 space-y-6 border-r-[0.2px]  border-gray-400">
       {/* Navigation Options */}
       <div className="space-y-4">
         {menuItems.map((item) => (

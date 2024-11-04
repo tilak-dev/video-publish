@@ -44,7 +44,7 @@ export const VideoDataProvider: React.FC<{ children: React.ReactNode }> = ({
   };
   useEffect(() => {
     fetchedVideo();
-  }, [setVideos]);
+  }, [fetchedVideo.length]);
 
   return (
     <videoDataContext.Provider
