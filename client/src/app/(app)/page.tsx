@@ -15,6 +15,7 @@ const VideoGrid = () => {
           {videos.map((video) => (
             <VideoCard
               key={video._id}
+              _id={video._id}
               thumbnail={video.thumbnail}
               title={video.title}
               owner={video.owner}

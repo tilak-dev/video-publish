@@ -3,9 +3,11 @@ import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import React from "react";
 import { IoSearch } from "react-icons/io5";
+import Cookies from "js-cookie";
 
 const Navbar = () => {
-  const {currentUser,logout } = useAuth()
+  const user =localStorage.getItem("user");
+  const {logout } = useAuth()
   const OnLogout =() => {
     logout()
   }
@@ -35,7 +37,7 @@ const Navbar = () => {
 
       {/* User Profile & Notifications */}
       <div className="flex items-center space-x-4">
-        {currentUser ?
+        {user ?
         <>
          <Link
           href="/"

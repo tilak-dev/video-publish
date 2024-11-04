@@ -3,12 +3,35 @@ import HomeAsideLayout from "@/components/HomeAsideLayout";
 import Comment from "@/components/video/Comment";
 import OwnerDetails from "@/components/video/ownerDetails";
 import SuggestVideos from "@/components/video/SuggestVideos";
+import { VideoCardType } from "@/types/type";
+import api from "@/utils/axiosInstance";
 import { useParams } from "next/navigation";
-import { FiThumbsUp, FiMessageSquare, FiShare2 } from "react-icons/fi";
+import { useEffect, useState } from "react";
+import { FiThumbsUp, FiMessageSquare } from "react-icons/fi";
 
 const VideoDetailPage = () => {
-  const {videoId} = useParams()
-  console.log("bhai video id ",videoId)
+  const [video, setVideo] = useState<VideoCardType | null>(null);
+  const { videoId } = useParams();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchVideo = async () => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/video/${videoId}`);
+      if (!response.data) {
+        console.error("Error fetching video details");
+      }
+      console.log("data ", response.data.data);
+      setVideo(response.data.data);
+    } catch (error) {
+      console.log("Error fetching video details", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchVideo();
+  }, [videoId]);
   return (
     <div className="md:flex h-[calc(100vh-4rem)] bg-gray-900 text-white pl-8 py-10 gap-x-10 overflow-y-auto grid grid-cols-1">
       {/* Sidebar */}
@@ -20,14 +43,13 @@ const VideoDetailPage = () => {
       <div className="h-full flex flex-1 flex-col">
         {/* Video Player */}
         <div className="bg-black rounded-xl ">
-          <video className="w-full h-[60vh] " controls src="/video.mp4" />
+          <video className="w-full h-[60vh] " controls src={video?.videoFile} />
         </div>
-
         {/* Video Details */}
         <div className="p-6 space-y-3 border-b border-gray-700">
-          <h1 className="text-2xl font-semibold">Advanced React Patterns</h1>
+          <h1 className="text-2xl font-semibold">{video?.title}</h1>
           <div className="flex flex-col text-gray-400">
-            <span>30,164 views • 18 hours ago</span>
+            <span>{video?.views} views • 18 hours ago</span>
             <div className="text-sm">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               possimus, tempore ex commodi delectus perspiciatis fuga repellat
@@ -49,10 +71,9 @@ const VideoDetailPage = () => {
             </div>
           </div>
         </div>
-
         {/* Comment Section */}.
         <div className="">
-        <Comment />   
+          <Comment />
         </div>
       </div>
 

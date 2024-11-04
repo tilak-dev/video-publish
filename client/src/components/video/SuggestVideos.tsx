@@ -12,7 +12,7 @@ export default function SuggestVideos() {
           <div className="flex space-x-3 p-2 hover:border-indigo-200 border-[1px] border-transparent transition-all duration-150 ease-in rounded-lg cursor-pointer">
             <Image
               src="/thumbnail.png"
-              width={60}
+              width={20}
               height={60}
               className="rounded-lg h-20 w-60"
               alt="Suggested Video Thumbnail "

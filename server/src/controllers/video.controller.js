@@ -143,10 +143,43 @@ const getVideoById = asyncHandler(async (req, res) => {
       },
     },
     {
+      $lookup:{
+        from:"likes",
+        localField:"_id",
+        foreignField:"onVideo",
+        as: "likes",
+      }
+    },
+    {
+      $lookup:{
+        from:"comments",
+        localField:"_id",
+        foreignField:"onVideo",
+        as: "comments",
+      }
+    },
+    {
+      $lookup:{
+        from: "subscriptions",
+        localField:"owner",
+        foreignField:"channel",
+        as: "subcribers",
+      }
+    },
+    {
         $addFields: {
             owner: {
                 $arrayElemAt: ["$owner", 0],
-            }
+            },
+            likes: {
+              $size: "$likes",
+            },
+            comments: {
+              $size: "$comments",
+            },
+            subcribers: {
+              $size: "$subcribers",
+            },
         }
     }
   ]);
@@ -158,7 +191,7 @@ const getVideoById = asyncHandler(async (req, res) => {
   //return
   return res
    .status(200)
-   .json(new ApiResponse(200, "Video fetched successfully", video));
+   .json(new ApiResponse(200, "Video fetched successfully", video[0]));
 });
 
 const updateVideo = asyncHandler(async (req, res) => {
