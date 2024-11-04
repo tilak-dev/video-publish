@@ -6,7 +6,7 @@ import { FiThumbsUp, FiMessageSquare, FiShare2 } from "react-icons/fi";
 
 const VideoDetailPage = () => {
   return (
-    <div className="flex h-[calc(100vh-4rem)] bg-gray-900 text-white px-8 py-10 gap-x-10 overflow-y-auto" >
+    <div className="flex h-[calc(100vh-4rem)] bg-gray-900 text-white pl-8 py-10 gap-x-10 overflow-y-auto">
       {/* Sidebar */}
       {/* <div className="w-1/6">
         <HomeAsideLayout/>
@@ -60,9 +60,8 @@ const VideoDetailPage = () => {
 
       {/* Suggested Videos */}
       <div className="">
-      <SuggestVideos />  
+        <SuggestVideos />
       </div>
-      
     </div>
   );
 };
